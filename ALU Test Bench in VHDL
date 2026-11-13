@@ -1,0 +1,104 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 10/31/2024 03:02:07 PM
+-- Design Name: 
+-- Module Name: ALU_tb - ALU
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity ALU_tb is
+end ALU_tb;
+
+architecture ALU of ALU_tb is
+
+Component ALU
+    Port ( A : in STD_LOGIC_VECTOR (7 downto 0);
+           B : in STD_LOGIC_VECTOR (7 downto 0);
+           Cmd : in STD_LOGIC_VECTOR (3 downto 0);
+           F : out STD_LOGIC_VECTOR (7 downto 0);
+           N : out STD_LOGIC;
+           C : out STD_LOGIC;
+           Z : out STD_LOGIC);
+end component ;
+
+signal A_int, B_int, F_int : std_logic_vector (7 downto 0);
+signal Cmd_int : std_logic_vector (3 downto 0);
+signal Nf, Cf, Zf : std_logic;
+
+-- ALU instructions
+constant NOP : std_logic_vector(3 downto 0) := "0000";
+constant XORA: std_logic_vector(3 downto 0) := "0001";
+constant INCA: std_logic_vector(3 downto 0) := "0010";
+constant DECA: std_logic_vector(3 downto 0) := "0011";
+constant ANDA: std_logic_vector(3 downto 0) := "0100";
+constant ORA:  std_logic_vector(3 downto 0) := "0101";
+constant ADDA: std_logic_vector(3 downto 0) := "0110";
+constant SUBA: std_logic_vector(3 downto 0) := "0111";
+constant LDA : std_logic_vector(3 downto 0) := "1000";
+
+begin
+
+DUT: ALU port map(
+    A => A_int,
+    B => B_int,
+    F => F_int,
+    Cmd => Cmd_int,
+    N => Nf,
+    C => Cf,
+    Z => Zf);
+
+    process begin
+        A_int <= "11111111";
+        B_int <= "10101010";
+        
+        Cmd_int <= NOP; wait for 5ns;
+        Cmd_int <= XORA; wait for 5ns;
+        Cmd_int <= INCA; wait for 5ns;
+        Cmd_int <= DECA; wait for 5ns;
+        Cmd_int <= ANDA; wait for 5ns;
+        Cmd_int <= ORA; wait for 5ns;
+        Cmd_int <= ADDA; wait for 5ns;
+        Cmd_int <= SUBA; wait for 5ns;
+        Cmd_int <= LDA; wait for 5ns;
+        
+        B_int <= "11111111";
+        A_int <= "10101010";
+        
+        Cmd_int <= NOP; wait for 5ns;
+        Cmd_int <= XORA; wait for 5ns;
+        Cmd_int <= INCA; wait for 5ns;
+        Cmd_int <= DECA; wait for 5ns;
+        Cmd_int <= ANDA; wait for 5ns;
+        Cmd_int <= ORA; wait for 5ns;
+        Cmd_int <= ADDA; wait for 5ns;
+        Cmd_int <= SUBA; wait for 5ns;
+        Cmd_int <= LDA; wait for 5ns;
+        wait;
+    end process;
+    
+end ALU;
